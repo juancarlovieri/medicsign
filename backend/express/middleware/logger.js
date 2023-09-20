@@ -9,10 +9,13 @@ const logFormat = format.printf(
   ({ level, message, timestamp }) => `${timestamp} ${level}: ${message}`
 );
 
+const logLevel = env.NODE_ENV === "production" ? "warn" : "info";
+
 const logger = winston.createLogger({
   format: format.combine(format.metadata()),
   transports: [
     new transports.Console({
+      level: logLevel,
       format: format.combine(
         format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss.SSS' }),
         format.cli(),
@@ -23,7 +26,7 @@ const logger = winston.createLogger({
       filename: 'combined.log',
       format: format.combine(format.timestamp(), format.json()),
     }),
-    new transports.MongoDB({ db: env.mongodb }),
+    new transports.MongoDB({ level: logLevel, db: env.mongodb }),
   ],
 });
 

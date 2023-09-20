@@ -4,7 +4,7 @@ const record = require(`./controllers/record`);
 const { auth, refresh, validate, logout } = require(`./middleware/auth`);
 
 module.exports = (app) => {
-  app.get(`/`, (req, res) => {
+  app.get(`/`, (req, res, next) => {
     res.send({ data: `API success!` });
   });
 

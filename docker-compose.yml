@@ -39,9 +39,11 @@ services:
       - 27017:27017
     volumes:
       - mongodb:/data/db
+      - ./mongod.conf:/etc/mongo/mongod.conf
       - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
       - mongodb_network
+    command: --config /etc/mongo/mongod.conf
   nginx:
     image: nginx:latest
     volumes:

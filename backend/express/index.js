@@ -10,8 +10,10 @@ const session = require(`express-session`);
 const crypto = require(`crypto`);
 const websocket = require(`./middleware/websocket`);
 const MongoStore = require('connect-mongo');
+var morgan = require('morgan');
 
 const app = express();
+app.use(morgan('dev', {stream: {write: (message) => logger.info(message)}}));
 app.use(express.json());
 // app.use(cookieParser());
 
