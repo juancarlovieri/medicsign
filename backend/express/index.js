@@ -33,7 +33,10 @@ app.use(
 
 app.use(
   cors({
-    origin: `http://localhost:${env.FRONTEND_PORT}`,
+    origin: (origin, callback) => {
+      callback(null, true);
+      // `http://localhost:${env.FRONTEND_PORT}`
+    },
     methods: ['GET', 'PUT', 'POST'],
     allowedHeaders: ['Content-Type', 'Authorization', 'x-csrf-token'],
     credentials: true,
