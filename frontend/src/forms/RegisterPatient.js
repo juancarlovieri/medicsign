@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { Formik, Field, Form, ErrorMessage } from "formik";
+const env = process.env;
 
 import { createRSA, getPublic, getPrivate } from "app/App";
 import { isLoggedIn } from "login/Accounts";
@@ -61,7 +62,7 @@ const validate = (values) => {
 async function create(payload) {
   try {
     const res = await axios.post(
-      `http://localhost:3000/patient/create`,
+      `${env.REACT_APP_BACKEND_URL}/patient/create`,
       payload
     );
     console.log(`Success!`);

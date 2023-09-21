@@ -4,6 +4,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 
 import { createRSA, getPublic, getPrivate } from "app/App";
 import { isLoggedIn } from "login/Accounts";
+const env = process.env;
 
 // name
 // email
@@ -53,7 +54,7 @@ async function create(payload) {
   try {
     console.log(payload);
     const res = await axios.post(
-      `http://localhost:3000/doctor/create`,
+      `${env.REACT_APP_BACKEND_URL}/doctor/create`,
       payload
     );
     console.log(`Success!`);
