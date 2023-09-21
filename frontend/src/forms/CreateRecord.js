@@ -4,7 +4,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 
 import { createRSA, getPublic, getPrivate, signRSA } from "app/App";
 import { getUser, isLoggedIn } from "login/Accounts";
-
+const env = process.env;
 import QrReader from "react-qr-scanner";
 import mongoose from "mongoose";
 
@@ -68,7 +68,7 @@ const validate = (values) => {
 
 async function sendRecord(payload) {
   try {
-    const res = await axios.post(`http://localhost:3000/record/create`, {
+    const res = await axios.post(`${env.REACT_APP_BACKEND_URL}/record/create`, {
       record: payload,
     });
     console.log(`Success!`);

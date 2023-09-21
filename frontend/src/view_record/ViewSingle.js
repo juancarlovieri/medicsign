@@ -4,6 +4,7 @@ import { isLoggedIn } from "login/Accounts";
 import Signature from "signing/Signature";
 import Verify from "signing/Verify";
 import { useParams } from "react-router-dom";
+const env = process.env;
 
 import {
   Badge,
@@ -20,7 +21,7 @@ import {
 async function queryRecord(_id) {
   try {
     const res = await axios.get(
-      "http://localhost:3000/record/view/" + String(_id)
+      `${env.REACT_APP_BACKEND_URL}/record/view/` + String(_id)
     );
     console.log("success");
     const { record } = res.data.data;
@@ -33,7 +34,7 @@ async function queryRecord(_id) {
 async function queryDoctor(_id) {
   try {
     const res = await axios.get(
-      "http://localhost:3000/doctor/view/" + String(_id)
+      `${env.REACT_APP_BACKEND_URL}/doctor/view/` + String(_id)
     );
     console.log("success");
     const { user } = res.data.data;
@@ -46,7 +47,7 @@ async function queryDoctor(_id) {
 async function queryPatient(_id) {
   try {
     const res = await axios.get(
-      "http://localhost:3000/patient/view/" + String(_id)
+      `${env.REACT_APP_BACKEND_URL}/patient/view/` + String(_id)
     );
     console.log("success");
     const { user } = res.data.data;

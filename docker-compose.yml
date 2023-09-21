@@ -28,7 +28,7 @@ services:
     restart: unless-stopped
     env_file: ./frontend/.env
     ports:
-      - 80:80
+      - 80:3000
   mongodb:
     image: "mongodb/mongodb-community-server:6.0-ubi8"
     restart: unless-stopped

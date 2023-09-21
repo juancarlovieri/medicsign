@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { getUser, isLoggedIn } from "login/Accounts";
+const env = process.env;
 
 import {
   Badge,
@@ -17,7 +18,7 @@ import {
 async function queryRecordList() {
   try {
     const user = await getUser();
-    const query_path = "http://localhost:3000/patient/list/" + user._id;
+    const query_path = `${env.REACT_APP_BACKEND_URL}/patient/list/` + user._id;
     const res = await axios.get(query_path);
     const { data } = res.data;
     return data;
@@ -31,7 +32,7 @@ async function queryPatient(_id) {
   try {
     console.log(_id.toString());
     const res = await axios.get(
-      "http://localhost:3000/patient/view/" + _id.toString()
+      `${env.REACT_APP_BACKEND_URL}/patient/view/` + _id.toString()
     );
     console.log("success");
     const { user } = res.data.data;

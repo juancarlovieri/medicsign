@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { getUser } from "login/Accounts";
 import axios from "axios";
+const env = process.env;
 
 function ab2str(buf) {
   return window.btoa(String.fromCharCode.apply(null, new Uint8Array(buf)));
@@ -132,7 +133,7 @@ async function signRSA(data) {
 async function getDoctorPublicKey(doctor_id) {
   try {
     const res = await axios.get(
-      `http://localhost:3000/doctor/view/${doctor_id}`
+      `${env.REACT_APP_BACKEND_URL}/doctor/view/${doctor_id}`
     );
     const { data } = res.data;
     console.log(data.user.public_key);

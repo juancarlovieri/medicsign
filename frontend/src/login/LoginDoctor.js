@@ -3,6 +3,7 @@ import axios from "axios";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { saveRSA } from "app/App";
 import { isLoggedIn, saveUser } from "./Accounts.js";
+const env = process.env;
 
 import { Navigate } from "react-router";
 
@@ -32,7 +33,7 @@ const validate = (values) => {
 
 async function loginUser(payload) {
   try {
-    const res = await axios.post(`http://localhost:3000/doctor/login`, payload);
+    const res = await axios.post(`${env.REACT_APP_BACKEND_URL}/doctor/login`, payload);
     const { data } = res.data;
     return data;
   } catch (error) {

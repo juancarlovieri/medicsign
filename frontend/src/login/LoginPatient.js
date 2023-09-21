@@ -3,7 +3,7 @@ import axios from "axios";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { saveRSA } from "app/App";
 import { isLoggedIn, saveUser } from "./Accounts";
-
+const env = process.env;
 import { Navigate } from "react-router";
 
 const validate = (values) => {
@@ -33,7 +33,7 @@ const validate = (values) => {
 async function loginUser(payload) {
   try {
     const res = await axios.post(
-      "http://localhost:3000/patient/login",
+      `${env.REACT_APP_BACKEND_URL}/patient/login`,
       payload
     );
     const { data } = res.data;

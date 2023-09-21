@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import { signRSA } from "app/App.js";
+const env = process.env;
 
 class Signature extends Component {
   constructor(props) {
@@ -32,7 +33,7 @@ class Signature extends Component {
 
     try {
       const res = await axios.post(
-        `http://localhost:3000/record/update`,
+        `${env.REACT_APP_BACKEND_URL}/record/update`,
         payload
       );
       console.log(`Success!`);
