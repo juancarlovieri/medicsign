@@ -3,9 +3,7 @@ const express = require(`express`);
 const mongoose = require(`mongoose`);
 const cors = require('cors');
 const { logger } = require(`./middleware/logger`);
-const { success, error } = require(`./middleware/req_handler`);
 const router = require(`./router`);
-const cookieParser = require(`cookie-parser`);
 const session = require(`express-session`);
 const crypto = require(`crypto`);
 const websocket = require(`./middleware/websocket`);
@@ -15,7 +13,6 @@ var morgan = require('morgan');
 const app = express();
 app.use(morgan('dev', {stream: {write: (message) => logger.info(message)}}));
 app.use(express.json());
-// app.use(cookieParser());
 
 const secret =
   env.ACCESS_TOKEN_SECRET || crypto.randomBytes(128).toString(`base64`);

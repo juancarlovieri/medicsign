@@ -27,7 +27,7 @@ services:
     build: ./frontend/
     restart: unless-stopped
     ports:
-      - 3001:3000
+      - 3000:3000
   mongodb:
     image: "mongodb/mongodb-community-server:6.0-ubi8"
     restart: unless-stopped
@@ -57,6 +57,10 @@ services:
 
 volumes:
   mongodb:
+    driver: azure_file
+    driver_opts:
+      share_name: dbtest
+      storage_account_name: jerseybiddingtest2
 
 networks:
   mongodb_network:
