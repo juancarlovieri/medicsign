@@ -6,6 +6,7 @@ const fastifySession = require('@fastify/session');
 const fastifyCookie = require('@fastify/cookie');
 const {auth} = require(`./middleware/auth`);
 const cors = require(`@fastify/cors`);
+const MongoStore = require('connect-mongo');
 
 const env = process.env;
 
@@ -28,7 +29,14 @@ fastify.register(cors, {
   exposedHeaders: ['*', 'Authorization'],
 });
 fastify.register(fastifyCookie);
-fastify.register(fastifySession, {secret});
+fastify.register(fastifySession, {
+  secret, 
+  store: MongoStore.create({
+    mongoUrl: env.mongodb,
+    ttl: 7 * 24 * 60 * 60,
+    autoRemove: `native`,
+  }),
+});
 fastify.addHook(`onRequest`, auth);
 
 fastify.register(router);
