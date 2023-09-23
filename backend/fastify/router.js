@@ -1,6 +1,6 @@
-// const patient = require(`./controllers/patient`);
-// const doctor = require(`./controllers/doctor`);
-// const record = require(`./controllers/record`);
+const patient = require(`./controllers/patient`);
+const doctor = require(`./controllers/doctor`);
+const record = require(`./controllers/record`);
 const { auth, refresh, validate, logout }  = require(`./middleware/auth`);
 
 module.exports = async (fastify, options) => {
@@ -8,23 +8,23 @@ module.exports = async (fastify, options) => {
     res.send({ data: `API success with fastify!` });
   });
 
-  // app.post(`/patient/create`, patient.create);
-  // app.post(`/patient/update`, auth, patient.update);
-  // app.post(`/patient/login`, patient.login);
-  // app.get(`/patient/view/:user`, auth, patient.view);
-  // app.get(`/patient/list/:user`, auth, patient.list);
+  fastify.post(`/patient/create`, patient.create);
+  fastify.post(`/patient/update`, patient.update);
+  fastify.post(`/patient/login`, patient.login);
+  fastify.get(`/patient/view/:user`, patient.view);
+  fastify.get(`/patient/list/:user`, patient.list);
 
-  // app.post(`/doctor/create`, doctor.create);
-  // app.post(`/doctor/update`, auth, doctor.update);
-  // app.post(`/doctor/login`, doctor.login);
-  // app.get(`/doctor/view/:user`, auth, doctor.view);
-  // app.get(`/doctor/list/:user`, auth, doctor.list);
+  fastify.post(`/doctor/create`, doctor.create);
+  fastify.post(`/doctor/update`, doctor.update);
+  fastify.post(`/doctor/login`, doctor.login);
+  fastify.get(`/doctor/view/:user`, doctor.view);
+  fastify.get(`/doctor/list/:user`, doctor.list);
 
-  // app.post(`/record/create`, auth, record.create);
-  // app.post(`/record/update`, auth, record.update);
-  // app.get(`/record/view/:record`, auth, record.view);
+  fastify.post(`/record/create`, record.create);
+  fastify.post(`/record/update`, record.update);
+  fastify.get(`/record/view/:record`, record.view);
 
-  // app.get(`/token/validate`, validate);
-  // app.post(`/token/logout`, auth, logout);
+  fastify.get(`/token/validate`, validate);
+  fastify.post(`/token/logout`, logout);
   // app.get(`/token/refresh`, refresh);
 };

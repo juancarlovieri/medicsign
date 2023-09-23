@@ -3,14 +3,14 @@ version: "3.8"
 services:
   backend:
     image: "medicsign/backend:latest"
-    build: ./backend/express/
+    build: ./backend/fastify/
     restart: unless-stopped
     environment:
       - WAIT_HOSTS=mongodb:27017
       - WAIT_HOSTS_TIMEOUT=300
       - WAIT_SLEEP_INTERVAL=10
       - WAIT_HOST_CONNECT_TIMEOUT=30
-    env_file: ./backend/express/.env
+    env_file: ./backend/fastify/.env
     # ports:
     #   - 3000:3000
     expose:

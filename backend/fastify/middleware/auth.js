@@ -11,8 +11,7 @@ const env = process.env;
 async function login(user, req, type) {
   try {
     await session.regenerate(req);
-
-    req.session.userId = user._id;
+    req.session.userId = user._id.toString();
     req.session.type = type;
     await session.save(req);
     return true;
@@ -38,11 +37,12 @@ async function logout(req, res) {
 }
 
 function auth(req, res, next) {
+  if (!req.session) return next();
   const { userId } = req.session;
 
-  if (!userId) {
-    return sendStatus(res, 403, `No credentials found.`);
-  }
+  // if (!userId) {
+  //   return sendStatus(res, 403, `No credentials found.`);
+  // }
 
   req.user = { userId };
   return next();

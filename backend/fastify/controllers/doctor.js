@@ -179,7 +179,6 @@ async function update(req, res) {
 
 async function list(req, res) {
   var userId = req.params.user;
-
   try {
     if (
       !userId ||
@@ -193,7 +192,7 @@ async function list(req, res) {
     const records = await Record.find({ doctor_id: userId });
     return await success(res, { records });
   } catch (error) {
-    logger.error(`Error retrieving record list.`, { error });
+    logger.error(`Error retrieving record list: ${error.message}`, { error });
     return await sendStatus(res, 500);
   }
 }
