@@ -1,0 +1,81 @@
+version: "3.8"
+
+services:
+  backend:
+    image: "medicsign/backend:latest"
+    build: ./backend/fastify/
+    restart: unless-stopped
+    environment:
+      - WAIT_HOSTS=mongodb:27017
+      - WAIT_HOSTS_TIMEOUT=300
+      - WAIT_SLEEP_INTERVAL=10
+      - WAIT_HOST_CONNECT_TIMEOUT=30
+    env_file: ./backend/fastify/.env
+    # ports:
+    #   - 3000:3000
+    expose:
+      - 3000
+    depends_on:
+      - mongodb
+    links:
+      - mongodb
+    networks:
+      - mongodb_network
+      - backend
+  frontend:
+    image: "medicsign/frontend:latest"
+    build: ./frontend/
+    restart: unless-stopped
+    env_file: ./frontend/.env
+    networks:
+      - frontend
+    # ports:
+    #   - 80:3000
+  mongodb:
+    image: "mongodb/mongodb-community-server:6.0-ubi8"
+    restart: unless-stopped
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=ramaponytails
+      - MONGODB_INITDB_ROOT_PASSWORD=ahlibesar
+      - MONGODB_INITDB_DATABASE=db
+    ports:
+      - 27017:27017
+    volumes:
+      - mongodb:/data/db
+      - ./mongod.conf:/etc/mongo/mongod.conf
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - mongodb_network
+    command: --config /etc/mongo/mongod.conf
+  nginx:
+    image: nginx:latest
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./ssl/key.pem:/root/ssl/key.pem
+      - ./ssl/cert.pem:/root/ssl/cert.pem
+    depends_on:
+      - backend
+    ports:
+      - 3000:3000
+      - 443:443
+      - 80:80
+    networks:
+      - backend
+      - frontend
+
+volumes:
+  mongodb:
+    driver: azure_file
+    driver_opts:
+      share_name: dbtest
+      storage_account_name: jerseybiddingtest2
+
+networks:
+  mongodb_network:
+    driver: bridge
+  backend:
+    driver: bridge
+    name: backend
+  frontend:
+    driver: bridge
+    name: frontend
